@@ -1,7 +1,11 @@
 package com.example.task_2_11_kg;
 
+import java.math.*;
+
 public class Point {
-    private int x, y;
+    private int x;
+    private int y;
+
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
