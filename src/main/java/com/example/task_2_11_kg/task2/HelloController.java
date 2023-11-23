@@ -1,4 +1,4 @@
-package com.example.task_2_11_kg;
+package com.example.task_2_11_kg.task2;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

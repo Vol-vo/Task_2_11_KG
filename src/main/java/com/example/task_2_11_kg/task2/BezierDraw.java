@@ -1,4 +1,4 @@
-package com.example.task_2_11_kg;
+package com.example.task_2_11_kg.task2;
 
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -62,7 +62,7 @@ public class BezierDraw {
 
     private static double bernstein(double t, int n, int k) {
         int с = fact(n) / (fact(k) * fact(n - k));
-        return (с * Math.pow(1 - t, n - k) * Math.pow(t, k));
+        return с * Math.pow(1 - t, n - k) * Math.pow(t, k);
     }
 
     private Point getPoint(double t) {
