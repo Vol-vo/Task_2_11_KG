@@ -9,5 +9,6 @@ module com.example.task_2_11_kg {
     requires com.almasb.fxgl.all;
 
     opens com.example.task_2_11_kg to javafx.fxml;
-    exports com.example.task_2_11_kg;
+    exports com.example.task_2_11_kg.task2;
+    opens com.example.task_2_11_kg.task2 to javafx.fxml;
 }

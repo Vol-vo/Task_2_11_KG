@@ -1,4 +1,4 @@
-package com.example.task_2_11_kg;
+package com.example.task_2_11_kg.task2;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -22,7 +22,7 @@ public class HelloApplication extends Application {
         Group root = new Group();
         Canvas canvas = new Canvas(1000, 700);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        BeizerDraw paint = new BeizerDraw();
+        BezierDraw paint = new BezierDraw();
         paint.drawShapes(gc, root, canvas);
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root));
