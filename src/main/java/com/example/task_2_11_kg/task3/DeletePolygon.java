@@ -20,16 +20,35 @@ public class DeletePolygon {
         question = true;
     }
 
-    public void delete(int index) throws Exception {
+    public DeletePolygon(Model model) throws FileNotFoundException {
+        this.model = model;
+        remove = false;
+        question = true;
+    }
 
-        if (index > model.polygons.size()) {
+    public boolean delete(int index) throws Exception {
+
+        if (index > model.polygons.size() || index < 0) {
             throw new Exception("Полигона с таким индексом не существует. Ошибка возникла в методе delete."
                     + " Количество полигонов: " + model.polygons.size());
         }
         model.polygons.remove(index);
         isDeleteVerticals();
         System.out.println("Полигон успешно удалён!");
+        return true;
+    }
 
+    public boolean delete(int index, boolean remove) throws Exception {
+        question = false;
+        this.remove = remove;
+        if (index > model.polygons.size() || index < 0) {
+            throw new Exception("Полигона с таким индексом не существует. Ошибка возникла в методе delete."
+                    + " Количество полигонов: " + model.polygons.size());
+        }
+        model.polygons.remove(index);
+        isDeleteVerticals();
+        System.out.println("Полигон успешно удалён!");
+        return true;
     }
 
     private void isDeleteVerticals(){

@@ -18,11 +18,11 @@ public class Main {
             for (int i = 0; i < 300; i++) {
                 deletePolygon.delete(i);
             }
+            System.out.println(size1 - deletePolygon.getModel().vertices.size());
+
+            ObjWriter.write("TestPolygon.obj", deletePolygon.getModel());
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(size1 - deletePolygon.getModel().vertices.size());
-
-        ObjWriter.write("TestPolygon", deletePolygon.getModel());
     }
 }

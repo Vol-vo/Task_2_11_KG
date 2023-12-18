@@ -15,6 +15,7 @@ public class Polygon {
         normalIndices = new ArrayList<>();
     }
 
+
     public void setVertexIndices(ArrayList<Integer> vertexIndices) {
         assert vertexIndices.size() >= 3;
         this.vertexIndices = vertexIndices;
