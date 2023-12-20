@@ -16,7 +16,7 @@ public class Main {
         int size1 = deletePolygon.getModel().vertices.size();
         try {
             for (int i = 0; i < 300; i++) {
-                deletePolygon.delete(i);
+                deletePolygon.delete(i, true);
             }
             System.out.println(size1 - deletePolygon.getModel().vertices.size());
 

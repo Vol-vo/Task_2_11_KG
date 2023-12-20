@@ -6,89 +6,57 @@ import com.example.task_2_11_kg.ObjReader.objreader.ObjReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 
 public class DeletePolygon {
     private final Model model;
-    private boolean remove;
-    private boolean question;
 
     public DeletePolygon(File fileObject) throws FileNotFoundException {
         this.model = ObjReader.read(fileObject);
-        remove = false;
-        question = true;
+        counter();
     }
 
-    public DeletePolygon(Model model) throws FileNotFoundException {
+    public DeletePolygon(Model model) {
         this.model = model;
-        remove = false;
-        question = true;
+        counter();
     }
 
-    public boolean delete(int index) throws Exception {
-
-        if (index > model.polygons.size() || index < 0) {
-            throw new Exception("Полигона с таким индексом не существует. Ошибка возникла в методе delete."
-                    + " Количество полигонов: " + model.polygons.size());
+    private void counter(){
+        for (Polygon p : model.polygons) {
+            for (int j = 0; j < p.getVertexIndices().size(); j++) {
+                model.vertices.get(p.getVertexIndices().get(j)).count += 1;
+            }
         }
-        model.polygons.remove(index);
-        isDeleteVerticals();
-        System.out.println("Полигон успешно удалён!");
-        return true;
     }
+
 
     public boolean delete(int index, boolean remove) throws Exception {
-        question = false;
-        this.remove = remove;
         if (index > model.polygons.size() || index < 0) {
             throw new Exception("Полигона с таким индексом не существует. Ошибка возникла в методе delete."
                     + " Количество полигонов: " + model.polygons.size());
         }
+        if (remove) {
+            for (int i : model.polygons.get(index).getVertexIndices()) {
+                model.vertices.get(i).count -= 1;
+                if (model.vertices.get(i).count == 0) {
+                    deleteBadVerticals(i);
+                    model.vertices.remove(i);
+                }
+            }
+        }
         model.polygons.remove(index);
-        isDeleteVerticals();
         System.out.println("Полигон успешно удалён!");
         return true;
     }
 
-    private void isDeleteVerticals(){
-        for (int i = 0; i < model.vertices.size(); i++) {
-            boolean isReal = false;
-            for (Polygon p : model.polygons){
-                for (Integer pv : p.getVertexIndices()){
-                    if(i == pv){
-                        isReal = true;
-                        break;
-                    }
-                }
-                if (isReal){
-                    break;
-                }
-            }
-            if (!isReal){
-                if (question) {
-                    question = false;
-                    System.out.print("Удаляем \"висячие\" вершины? (y or n) ");
-                    Scanner scanner = new Scanner(System.in);
-                    String str = scanner.next();
-                    if (str.equals("y")){
-                        remove = true;
-                    }
-                }
-                if (remove) {
-                    for (Polygon p : model.polygons) {
-                        for (int j = 0; j < p.getVertexIndices().size(); j++) {
-                            if (p.getVertexIndices().get(j) > i) {
-                                p.getVertexIndices().set(j, (p.getVertexIndices().get(j) - 1));
-                            }
-                        }
-                    }
-                    model.vertices.remove(i);
-                    break;
+    private void deleteBadVerticals(int index){
+        for (Polygon p : model.polygons) {
+            for (int j = 0; j < p.getVertexIndices().size(); j++) {
+                if (p.getVertexIndices().get(j) > index) {
+                    p.getVertexIndices().set(j, (p.getVertexIndices().get(j) - 1));
                 }
             }
         }
-
     }
 
     public Model getModel() {
